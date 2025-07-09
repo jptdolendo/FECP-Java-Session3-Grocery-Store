@@ -33,12 +33,6 @@ public class Main {
 
     // Adds a product to the inventory
     static boolean addProduct(HashMap<String, Integer> inventory, String newProductName, int newProductQuantity) {
-        // Checks if the product already exists
-        if (inventory.containsKey(newProductName)) {
-            System.out.println("Product already exists, update it instead.");
-            return false;
-        }
-
         // Input is invalid if quantity is less than zero
         if (newProductQuantity < 0) {
             System.out.println("Invalid input. Product not added.");
