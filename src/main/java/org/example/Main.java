@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Main {
     // Displays the menu for the system
-    private static void displayMenu() {
+    static void displayMenu() {
         System.out.println("--- Grocery Inventory Menu ---");
         System.out.println("1. View Inventory");
         System.out.println("2. Add Product");
@@ -16,7 +16,7 @@ public class Main {
     }
 
     // Displays all items in the inventory
-    private static void viewInventory(HashMap<String, Integer> inventory) {
+     static void viewInventory(HashMap<String, Integer> inventory) {
         // Checks if inventory is empty
         if (inventory.isEmpty()) {
             System.out.println("Inventory empty!");
@@ -32,21 +32,12 @@ public class Main {
     }
 
     // Adds a product to the inventory
-    private static boolean addProduct(HashMap<String, Integer> inventory) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Enter product name: ");
-        String newProductName = scanner.nextLine();
-
+    static boolean addProduct(HashMap<String, Integer> inventory, String newProductName, int newProductQuantity) {
         // Checks if the product already exists
         if (inventory.containsKey(newProductName)) {
             System.out.println("Product already exists, update it instead.");
             return false;
         }
-
-        System.out.print("Enter quantity: ");
-        int newProductQuantity = scanner.nextInt();
-        scanner.nextLine();
 
         // Input is invalid if quantity is less than zero
         if (newProductQuantity < 0) {
@@ -62,16 +53,11 @@ public class Main {
     }
 
     // Displays the value of an individual product
-    private static boolean checkProduct(HashMap<String, Integer> inventory) {
+    static boolean checkProduct(HashMap<String, Integer> inventory, String productToCheck) {
         if (inventory.isEmpty()) {
             System.out.println("Inventory empty!");
             return false;
         }
-
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Enter product name to check: ");
-        String productToCheck = scanner.nextLine();
 
         if (!inventory.containsKey(productToCheck)) {
             System.out.println("Product does not exist. Check your spelling.");
@@ -88,48 +74,35 @@ public class Main {
     }
 
     // Updates the stock of an item
-    private static boolean updateStock(HashMap<String, Integer> inventory) {
+     static boolean updateStock(HashMap<String, Integer> inventory, String productToUpdate, int updatedProductQuantity) {
         if (inventory.isEmpty()) {
             System.out.println("Inventory empty!");
             return false;
         }
 
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Enter product name to update: ");
-        String productToUpdate = scanner.nextLine();
 
         if (!inventory.containsKey(productToUpdate)) {
             System.out.println("Product does not exist. Check your spelling.");
             return false;
         }
 
-        System.out.print("Enter new stock quantity: ");
-        int newProductQuantity = scanner.nextInt();
-        scanner.nextLine();
-
-        if (newProductQuantity < 0) {
+        if (updatedProductQuantity < 0) {
             System.out.println("Invalid input. Product not updated.");
             return false;
         }
 
-        inventory.put(productToUpdate, newProductQuantity);
+        inventory.put(productToUpdate, updatedProductQuantity);
         System.out.println("Stock updated!");
 
         return true;
     }
 
     // Removes an individual product
-    private static boolean removeProduct(HashMap<String, Integer> inventory) {
+     static boolean removeProduct(HashMap<String, Integer> inventory, String productToRemove) {
         if (inventory.isEmpty()) {
             System.out.println("Inventory empty!");
             return false;
         }
-
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Enter product name to remove: ");
-        String productToRemove = scanner.nextLine();
 
         if (!inventory.containsKey(productToRemove)) {
             System.out.println("Product does not exist. Check your spelling.");
@@ -160,16 +133,36 @@ public class Main {
                     viewInventory(inventory);
                     break;
                 case 2:
-                    addProduct(inventory);
+                    System.out.print("Enter product name: ");
+                    String newProductName = scanner.nextLine();
+
+                    System.out.print("Enter quantity: ");
+                    int newProductQuantity = scanner.nextInt();
+                    scanner.nextLine();
+
+                    addProduct(inventory, newProductName, newProductQuantity);
                     break;
                 case 3:
-                    checkProduct(inventory);
+                    System.out.print("Enter product name to check: ");
+                    String productToCheck = scanner.nextLine();
+
+                    checkProduct(inventory, productToCheck);
                     break;
                 case 4:
-                    updateStock(inventory);
+                    System.out.print("Enter product name to update: ");
+                    String productToUpdate = scanner.nextLine();
+
+                    System.out.print("Enter new stock quantity: ");
+                    int updatedProductQuantity = scanner.nextInt();
+                    scanner.nextLine();
+
+                    updateStock(inventory, productToUpdate, updatedProductQuantity);
                     break;
                 case 5:
-                    removeProduct(inventory);
+                    System.out.print("Enter product name to remove: ");
+                    String productToRemove = scanner.nextLine();
+
+                    removeProduct(inventory, productToRemove);
                     break;
                 case 6:
                     System.out.println("Exiting system.");
